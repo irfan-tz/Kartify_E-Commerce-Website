@@ -22,6 +22,7 @@
     color: 626262px;
     font-size: 20px;
     font-weight: 500;
+    margin-top: 20px; 
 }
 .nav-menu li{
     display: flex;
@@ -65,7 +66,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -24px;
+    margin-top: -12px;
     margin-left: -22px;
     border-radius: 11px;
     font-size: 14px;

@@ -1,41 +1,28 @@
 import './App.css';
-import {useState, useEffect} from "react";
-import axios from "axios";
-import NavBar from './Components/NavBar/NavBar';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Shop from './Pages/Shop'
+import Login from './Pages/Login'
+import SignUp from './Pages/SignUp'
+import Item from "./Pages/Item";
+import Cart from './Pages/Cart';
+import Order from './Pages/Order';
+import OrderComplete from './Pages/OrderComplete';
 
 function App() {
-
-  const [item, setItem] = useState([])
-
-  useEffect(() => {
-    async function getAllItems(){
-      try {
-        const item = await axios.get("http://127.0.0.1:8000/item/")
-        //remove this console log later
-        console.log(item.data)
-        setItem(item.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    getAllItems()
-
-  }, [])
-  return (
-   <div className="App">
-     <h1> <NavBar/> </h1>
-     { 
-     //<h1>🚧Website under construction🚧👷🏻</h1>
-     item.map((item, i) => {
-       return ( 
-         <h2 key={i}>{item.item_name}; ₹ {item.price.toLocaleString('en-IN')}</h2>
-       )
-     })
-     } 
-   </div>
- );
+  return ( 
+    <BrowserRouter>
+     <Routes>
+       <Route path='/' element={<Shop/>}> </Route>
+       <Route exact path="/item/:id" element={<Item/>}></Route>
+       <Route path='/cart' element={<Cart/>}> </Route>
+       <Route path='/order' element={<Order/>}> </Route>
+       <Route path='/orderComplete' element={<OrderComplete/>}></Route>
+       <Route path='/login' element={<Login/>}> </Route>  
+       <Route path='/signup' element={<SignUp/>}> </Route>
+     </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

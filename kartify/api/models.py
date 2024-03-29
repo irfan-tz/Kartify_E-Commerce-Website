@@ -4,12 +4,12 @@ from django.db import models
 
 class Customer(models.Model):
     name = models.CharField(max_length=50)
-    age = models.IntegerField()
+    age = models.IntegerField(null=True)  # Set null=True to allow NULL values
     c_email = models.EmailField(max_length=50, primary_key=True)
-    address = models.CharField(max_length=127)
+    address = models.CharField(max_length=127, null = True)
     password = models.CharField(max_length=50)
-    pincode = models.CharField(max_length = 6)
-    phone_num = models.CharField(max_length=10)
+    pincode = models.CharField(max_length=6, null=True)  # Set null=True to allow NULL values
+    phone_num = models.CharField(max_length=10, null=True)  # Set null=True to allow NULL values
 
 class Seller(models.Model):
     s_email = models.EmailField(max_length=50, primary_key=True)
@@ -39,9 +39,9 @@ class Cart(models.Model):
 
 class Delivery_Agent(models.Model):
     name = models.CharField(max_length=50)
-    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE, primary_key=True)
     phone_num = models.CharField(max_length=10)
-    d_email = models.EmailField(max_length=50, primary_key=True)
+    d_email = models.EmailField(max_length=50)
 
 class Payment(models.Model):
     transaction_id = models.CharField(max_length=15, primary_key=True)
@@ -52,7 +52,7 @@ class Payment(models.Model):
 
 class Customer_makes_order(models.Model):
     c_email = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Orders, on_delete=models.CASCADE, primary_key = True)
 
 class Order_contains_item(models.Model):
     order_id = models.ForeignKey(Orders, on_delete=models.CASCADE)
