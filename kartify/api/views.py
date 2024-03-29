@@ -70,23 +70,13 @@ def registerUser(request):
     try:
         user= User.objects.create(first_name=data['fname'],username=data['email'],email=data['email'],password=make_password(data['password']))
       
-        '''
-        # generate token for sending mail
-        email_subject="Activate Your Account"
-        message=render_to_string(
-            "activate.html",
-           {
-            'user':user,
-            'domain':'127.0.0.1:8000',
-            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-            'token':generate_token.make_token(user)
-           }
-
-        )
-        print(message)
-        email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[data['email']])
-        email_message.send()
-        '''
+        if not user.is_staff:
+            customer = Customer.objects.create(
+                name=data['fname'],  
+                c_email=data['email'],
+                password=data['password']
+            )
+            
         serialize=UserSerializerWithToken(user,many=False)
         return Response(serialize.data)
     except Exception as e:
